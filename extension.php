@@ -17,5 +17,13 @@ return array(
     'boot' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
     {
         $app->register('Laradic\Admin\AdminServiceProvider');
+    },
+    'install' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
+    {
+
+    },
+    'uninstall' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
+    {
+
     }
 );
