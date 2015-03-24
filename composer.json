@@ -1,6 +1,6 @@
 {
     "name": "laradic/admin",
-    "type": "platform-extension",
+    "type": "laradic-extension",
     "description": "Admin",
     "homepage": "https://github.com/laradic/admin",
     "keywords": [
