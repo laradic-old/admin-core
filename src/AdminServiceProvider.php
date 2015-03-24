@@ -25,56 +25,49 @@ class AdminServiceProvider extends ServiceProvider
 
     protected $configFiles = ['laradic_admin'];
 
-    /**
-     * Path to resources folder, relative to $dir
-     * @var string
-     */
     protected $resourcesPath = '/../resources';
 
     protected $dir = __DIR__;
 
     protected $providers = [
-
         'Laradic\Admin\Providers\RouteServiceProvider',
-       # 'Cartalyst\Sentry\SentryServiceProvider',
+
+        'Laradic\Themes\ThemeServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-        'Cartalyst\Alerts\Laravel\AlertsServiceProvider'
+        'Cartalyst\Alerts\Laravel\AlertsServiceProvider',
+       # 'Cartalyst\Sentry\SentryServiceProvider'
     ];
 
     protected $aliases = [
-       # 'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
         'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
         'Alert'  => 'Cartalyst\Alerts\Laravel\Facades\Alert'
     ];
 
     protected $routeMiddlewares = [
-      #  'admin.auth'  => 'Laradic\Admin\Http\Middleware\Authenticate',
-        #'admin.auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
-       # 'admin.guest' => 'Laradic\Admin\Http\Middleware\RedirectIfAuthenticated',
         'sentry.auth' => 'Sentinel\Middleware\SentryAuth',
         'sentry.admin' => 'Sentinel\Middleware\SentryAdminAccess',
     ];
 
     public function boot()
     {
-        parent::boot();
-        $this->app->register('Sentinel\SentinelServiceProvider');
-        \Breadcrumbs::setView('laradic/admin::partials.breadcrumbs');
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = parent::boot();
+        $app->register('Sentinel\SentinelServiceProvider');
+        $app->make('themes')->addPackagePublisher('laradic/admin', __DIR__ . '/../resources/theme');
+        $app->make('breadcrumbs')->setView('laradic/admin::partials.breadcrumbs');
     }
 
     /** @inheritdoc */
     public function register()
     {
-        parent::register();
-
         /** @var \Illuminate\Foundation\Application $app */
-        $app = $this->app;
+        $app = parent::register();
+
         $app->make('config')->set('cartalyst.alerts.classes', [ 'error' => 'danger' ]);
 
         $app['url'] = $app->share(function (Application $app)
         {
-
-            $routes = $app->runningInConsole() ? $app->make('router')->getRoutes() : $app->make('routes');
+            $routes = $app->make('router')->getRoutes();
 
             return new AdminUrlGenerator(
                 $routes,
@@ -85,7 +78,9 @@ class AdminServiceProvider extends ServiceProvider
 
         $app['redirect'] = $app->share(function (Application $app)
         {
-            return new AdminRedirector($app->make('url'));
+            $redirector = new AdminRedirector($app->make('url'));
+            $redirector->setSession($app->make('session.store'));
+            return $redirector;
         });
 
         require_once __DIR__ . '/helpers.php';

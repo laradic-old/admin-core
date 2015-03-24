@@ -8,15 +8,15 @@ return array(
     'name' => 'Admin',
     'slug' => 'laradic/admin',
     'dependencies' => [
-
+        'laradic/packadic'
     ],
     'register' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
     {
+        $app->register('Laradic\Admin\AdminServiceProvider');
 
     },
     'boot' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
     {
-        $app->register('Laradic\Admin\AdminServiceProvider');
     },
     'install' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
     {
