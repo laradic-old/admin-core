@@ -1,26 +1,6 @@
 <?php
 
-use DaveJamesMiller\Breadcrumbs\Generator;
-
-
-function registerBreadcrumbs($crumbs, $parent = null)
-{
-    foreach($crumbs as $route => $crumb)
-    {
-        Breadcrumbs::register($route, function(Generator $breadcrumbs) use ($parent, $crumb, $route) {
-            if(!is_null($parent)){
-                $breadcrumbs->parent($parent);
-            }
-            $breadcrumbs->push($crumb[0], route($route));
-        });
-        if(isset($crumb[1]) and is_array($crumb[1]))
-        {
-            registerBreadcrumbs($crumb[1], $route);
-        }
-    }
-}
-
-registerBreadcrumbs([
+Navigation::registerBreadcrumbs([
     'home' => [
         'Dashboard',
         [
@@ -34,20 +14,17 @@ registerBreadcrumbs([
                     'sentinel.users.show' => ['View user'],
                     'sentinel.profile.edit' => ['Edit profile'],
                     'sentinel.profile.show' => ['View user profile'],
-
-                ]
-            ],
-            'sentinel.groups.index' => [
-                'Groups',
-                [
                     'sentinel.groups.create' => ['Create group'],
                     'sentinel.groups.edit' => ['Edit group'],
                     'sentinel.groups.show' => ['View group'],
+
                 ]
             ]
         ]
     ]
 ]);
+
+
 /*
 Breadcrumbs::register('home', function (Generator $breadcrumbs)
 {

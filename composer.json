@@ -19,6 +19,7 @@
     "require": {
         "php": ">=5.4.0",
         "laradic/support": "~1.0",
+        "laradic/packadic": "dev-master",
         "cartalyst/alerts": "~2.0",
         "cartalyst/tags": "~1.0",
         "rydurham/sentinel": "~2.1",

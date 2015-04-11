@@ -29,7 +29,7 @@ class AdminRedirector extends Redirector
     public function toAdmin($path, $status = 302, $headers = array(), $secure = null)
     {
         $path = $this->generator->toAdmin($path, array(), $secure);
-
+        
         return $this->createRedirect($path, $status, $headers);
     }
 }

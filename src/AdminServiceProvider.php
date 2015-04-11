@@ -23,6 +23,7 @@ use Laradic\Support\ServiceProvider;
 class AdminServiceProvider extends ServiceProvider
 {
 
+
     protected $configFiles = ['laradic_admin'];
 
     protected $resourcesPath = '/../resources';
@@ -31,30 +32,36 @@ class AdminServiceProvider extends ServiceProvider
 
     protected $providers = [
         'Laradic\Admin\Providers\RouteServiceProvider',
-
         'Laradic\Themes\ThemeServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
         'Cartalyst\Alerts\Laravel\AlertsServiceProvider',
-       # 'Cartalyst\Sentry\SentryServiceProvider'
+        # 'Sentinel\SentinelServiceProvider'
+        # 'Cartalyst\Sentry\SentryServiceProvider'
     ];
 
     protected $aliases = [
         'Breadcrumbs' => 'DaveJamesMiller\Breadcrumbs\Facade',
-        'Alert'  => 'Cartalyst\Alerts\Laravel\Facades\Alert'
+        'Alert'       => 'Cartalyst\Alerts\Laravel\Facades\Alert'
     ];
 
     protected $routeMiddlewares = [
-        'sentry.auth' => 'Sentinel\Middleware\SentryAuth',
+        'sentry.auth'  => 'Sentinel\Middleware\SentryAuth',
         'sentry.admin' => 'Sentinel\Middleware\SentryAdminAccess',
     ];
+
+
+    public function provides()
+    {
+        return ['navigation'];
+    }
 
     public function boot()
     {
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::boot();
-        $app->register('Sentinel\SentinelServiceProvider');
         $app->make('themes')->addPackagePublisher('laradic/admin', __DIR__ . '/../resources/theme');
         $app->make('breadcrumbs')->setView('laradic/admin::partials.breadcrumbs');
+        require_once __DIR__ . '/Http/navigation.php';
     }
 
     /** @inheritdoc */
@@ -63,7 +70,8 @@ class AdminServiceProvider extends ServiceProvider
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::register();
 
-        $app->make('config')->set('cartalyst.alerts.classes', [ 'error' => 'danger' ]);
+        $config = $app->make('config');
+        $config->set('cartalyst.alerts.classes', ['error' => 'danger']);
 
         $app['url'] = $app->share(function (Application $app)
         {
@@ -80,12 +88,24 @@ class AdminServiceProvider extends ServiceProvider
         {
             $redirector = new AdminRedirector($app->make('url'));
             $redirector->setSession($app->make('session.store'));
+
             return $redirector;
         });
 
+        /*
+         * @todo fix redis cache and remove workaround
+         * workaround enables registering SentinelServiceProvider in this class its register method
+         * instead of boot
+         */
+        $app['redis'] = new \Illuminate\Redis\Database($this->app['config']['database.redis']);
+        $app->resolveProviderClass('Illuminate\Cache\CacheServiceProvider')->register();
+        $app->register('Sentinel\SentinelServiceProvider');
+
+        # Add sentry to the navigation factory so we can make use of hasAccess and all stuff that uses that
+        $app->make('navigation')->setSentry($app->make('sentry'));
+
         require_once __DIR__ . '/helpers.php';
     }
-
     protected function requestRebinder()
     {
         return function (Application $app, $request)

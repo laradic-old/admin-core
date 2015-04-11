@@ -37,7 +37,6 @@ class RouteServiceProvider extends ServiceProvider {
 	{
 		$router->group(['namespace' => $this->namespace], function($router)
 		{
-            require_once __DIR__ . '/../Http/breadcrumbs.php';
 			require_once __DIR__ . '/../Http/routes.php';
 		});
 	}
