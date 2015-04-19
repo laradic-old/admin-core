@@ -3,6 +3,7 @@
 Navigation::add('admin', 'Admin menu', null, '#', true);
 Navigation::add('admin.dashboard', 'Dashboard', 'admin', 'home');
 Navigation::add('admin.users', 'Users', 'admin', 'sentinel.users.index');
+Navigation::add('admin.attributes', 'Attributes', 'admin', 'laradic.admin.attributes.index');
 
 
 Navigation::add('admin-right', 'Admin user menu', null);

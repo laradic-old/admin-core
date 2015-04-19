@@ -11,6 +11,7 @@
 namespace Laradic\Admin\FieldTypes;
 
 use ArrayAccess;
+use Debugger;
 
 /**
  * Class BaseFieldType
@@ -54,14 +55,15 @@ abstract class BaseFieldType implements ArrayAccess
 
     public function render()
     {
-        $this->factory->getView()->make($this->getView())->with([
+        #Debugger::dump(\Themes::addNamespace())
+        return $this->factory->getView()->make($this->getView())->with([
             'slug' => $this->slug,
             'value' => $this->value,
             'attributes' => $this->attributes,
             'name' => $this->name,
             'assetGroupName' => 'field-types',
             'type' => $this
-        ]);
+        ])->render();
     }
 
     /**

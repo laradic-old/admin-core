@@ -1,7 +1,7 @@
 <?php namespace Laradic\Admin\Http\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
-
+use Laradic\Admin\Attributes\Attribute;
 
 
 class AttributeController extends Controller
@@ -13,6 +13,8 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        return view('laradic/admin::attributes.index');
+        $fieldTypes = app('laradic.admin.fieldtypes');
+        $attributes = Attribute::all();
+        return view('laradic/admin::attributes.index', compact('fieldTypes', 'attributes'));
     }
 }

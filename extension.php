@@ -21,9 +21,7 @@ return array(
     ],
     'register' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
-        #Debugger::dump('register');
         $app->register('Laradic\Admin\AdminServiceProvider');
-        #Debugger::dump(Config::get('laradic/admin::base_route'));
     },
     'boot' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {

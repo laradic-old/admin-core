@@ -19,7 +19,8 @@ Navigation::registerBreadcrumbs([
                     'sentinel.groups.show' => ['View group'],
 
                 ]
-            ]
+            ],
+            'laradic.admin.attributes.index' => ['Attributes']
         ]
     ]
 ]);

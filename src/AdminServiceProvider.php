@@ -60,6 +60,14 @@ class AdminServiceProvider extends ServiceProvider
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::boot();
 
+        $themes = $app->make('themes');
+        $view = $app->make('view');
+        $location = $themes->getActive()->getPath('namespaces') . '/field-types';
+        $view->addLocation($location);
+        $view->addNamespace('field-types', $location);
+        #$themes->addNamespace('fieldtypes', 'field-types');
+        $themes->addNamespacePublisher('field-types', Path::join(__DIR__, $this->resourcesPath, 'field-types'));
+
         $app->make('breadcrumbs')->setView('laradic/admin::partials.breadcrumbs');
         require_once __DIR__ . '/Http/navigation.php';
     }
@@ -91,9 +99,6 @@ class AdminServiceProvider extends ServiceProvider
         /** @var \Illuminate\Foundation\Application $app */
         $app = $this->app;
 
-        $themes = $app->make('themes');
-        $themes->addNamespace('field-types', 'field-types');
-        $themes->addNamespacePublisher('field-types', Path::join($this->resourcesPath, 'field-types'));
 
 
         $app->singleton('laradic.admin.fieldtypes', function (Application $app)

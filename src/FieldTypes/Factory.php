@@ -84,7 +84,7 @@ class Factory implements ArrayAccess
         return array_has($this->fieldTypes, $typeSlug);
     }
 
-    public function set($typeSlug, FieldType $type)
+    public function set($typeSlug, $type)
     {
         return array_set($this->fieldTypes, $typeSlug, $type);
     }
