@@ -1,5 +1,5 @@
 <?php
-Route::group(['prefix' => config('laradic_admin.base_route')], function ()
+Route::group(['prefix' => config('laradic/admin::base_route')], function ()
 {
     Route::get("/", ['as' => 'home', 'uses' => 'AdminController@index']);
 
@@ -51,6 +51,11 @@ Route::group(['prefix' => config('laradic_admin.base_route')], function ()
     Route::get('groups/{hash}/edit', ['as' => 'sentinel.groups.edit', 'uses' => 'GroupController@edit']);
     Route::put('groups/{hash}', ['as' => 'sentinel.groups.update', 'uses' => 'GroupController@update']);
     Route::delete('groups/{hash}', ['as' => 'sentinel.groups.destroy', 'uses' => 'GroupController@destroy']);
+
+    // Attributes
+    Route::group(['prefix' => 'attributes'], function(){
+        Route::get('/', ['as' => 'laradic.admin.attributes.index', 'uses' => 'AttributeController@index']);
+    });
 });
 
 #Route::get(, 'AdminController@index');

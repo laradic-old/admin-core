@@ -5,8 +5,10 @@
 namespace Laradic\Admin;
 
 use Illuminate\Foundation\Application;
+use Laradic\Admin\FieldTypes\Factory;
 use Laradic\Admin\Routing\AdminRedirector;
 use Laradic\Admin\Routing\AdminUrlGenerator;
+use Laradic\Support\Path;
 use Laradic\Support\ServiceProvider;
 
 #@use ACL;
@@ -24,7 +26,7 @@ class AdminServiceProvider extends ServiceProvider
 {
 
 
-    protected $configFiles = ['laradic_admin'];
+    #protected $configFiles = ['laradic_admin'];
 
     protected $resourcesPath = '/../resources';
 
@@ -34,9 +36,7 @@ class AdminServiceProvider extends ServiceProvider
         'Laradic\Admin\Providers\RouteServiceProvider',
         'Laradic\Themes\ThemeServiceProvider',
         'DaveJamesMiller\Breadcrumbs\ServiceProvider',
-        'Cartalyst\Alerts\Laravel\AlertsServiceProvider',
-        # 'Sentinel\SentinelServiceProvider'
-        # 'Cartalyst\Sentry\SentryServiceProvider'
+        'Cartalyst\Alerts\Laravel\AlertsServiceProvider'
     ];
 
     protected $aliases = [
@@ -59,7 +59,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::boot();
-        $app->make('themes')->addPackagePublisher('laradic/admin', __DIR__ . '/../resources/theme');
+
         $app->make('breadcrumbs')->setView('laradic/admin::partials.breadcrumbs');
         require_once __DIR__ . '/Http/navigation.php';
     }
@@ -73,24 +73,55 @@ class AdminServiceProvider extends ServiceProvider
         $config = $app->make('config');
         $config->set('cartalyst.alerts.classes', ['error' => 'danger']);
 
-        $app['url'] = $app->share(function (Application $app)
+        $this->registerRouting();
+        $this->registerSentinel();
+        $this->registerFieldTypes();
+
+        # Add sentry to the navigation factory so we can make use of hasAccess and all stuff that uses that
+        $app->make('navigation')->setSentry($app->make('sentry'));
+
+        require_once __DIR__ . '/helpers.php';
+    }
+
+    /**
+     * Registers/binds the FieldTypes classes to the IOC container
+     */
+    protected function registerFieldTypes()
+    {
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->app;
+
+        $themes = $app->make('themes');
+        $themes->addNamespace('field-types', 'field-types');
+        $themes->addNamespacePublisher('field-types', Path::join($this->resourcesPath, 'field-types'));
+
+
+        $app->singleton('laradic.admin.fieldtypes', function (Application $app)
         {
-            $routes = $app->make('router')->getRoutes();
+            $assets = $app->make('assets');
+            $assetGroup = $assets->group('field-types');
 
-            return new AdminUrlGenerator(
-                $routes,
-                $app->rebinding('request', $this->requestRebinder()),
-                config('laradic_admin.base_route')
-            );
+            $factory = new Factory($app, $assetGroup, $app->make('view'));
+
+            $fieldTypes = ['text'];
+
+            foreach ($fieldTypes as $fieldType)
+            {
+                $factory->register($fieldType, 'Laradic\Admin\FieldTypes\\' . ucfirst($fieldType) . 'FieldType');
+            }
+
+            return $factory;
         });
+    }
 
-        $app['redirect'] = $app->share(function (Application $app)
-        {
-            $redirector = new AdminRedirector($app->make('url'));
-            $redirector->setSession($app->make('session.store'));
-
-            return $redirector;
-        });
+    /**
+     * Registers/binds the Sentinel/Sentry classes to the IOC container
+     * and overrides the User and Group model
+     */
+    protected function registerSentinel()
+    {
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->app;
 
         /*
          * @todo fix redis cache and remove workaround
@@ -101,11 +132,39 @@ class AdminServiceProvider extends ServiceProvider
         $app->resolveProviderClass('Illuminate\Cache\CacheServiceProvider')->register();
         $app->register('Sentinel\SentinelServiceProvider');
 
-        # Add sentry to the navigation factory so we can make use of hasAccess and all stuff that uses that
-        $app->make('navigation')->setSentry($app->make('sentry'));
-
-        require_once __DIR__ . '/helpers.php';
+        // Replace the User and Group models with our own
+        $app->make('sentry.user')->setModel('Laradic\Admin\Models\User');
+        $app->make('sentry.group')->setModel('Laradic\Admin\Models\Group');
     }
+
+    /**
+     * Registers/binds/overrides the Routing helper classes to the IOC container
+     */
+    protected function registerRouting()
+    {
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->app;
+
+        $app['url'] = $app->share(function (Application $app)
+        {
+            $routes = $app->make('router')->getRoutes();
+
+            return new AdminUrlGenerator(
+                $routes,
+                $app->rebinding('request', $this->requestRebinder()),
+                config('laradic/admin::base_route')
+            );
+        });
+
+        $app['redirect'] = $app->share(function (Application $app)
+        {
+            $redirector = new AdminRedirector($app->make('url'));
+            $redirector->setSession($app->make('session.store'));
+
+            return $redirector;
+        });
+    }
+
     protected function requestRebinder()
     {
         return function (Application $app, $request)

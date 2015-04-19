@@ -3,8 +3,10 @@
 use Event;
 use Illuminate\Pagination\Paginator;
 use Input;
+use Laradic\Admin\Attributes\Attribute;
 use Redirect;
 use Sentinel\Controllers\UserController as BaseController;
+use Sentry;
 use View;
 
 class UserController extends BaseController
@@ -43,7 +45,12 @@ class UserController extends BaseController
      */
     public function index()
     {
-        #\Alert::notifier('view')->error('Error');
+        $id = Sentry::getUser()->getId();
+        $repo = app('Sentinel\Repositories\User\SentinelUserRepositoryInterface');
+        $this->userRepository->getUser()->update([
+            'id' => $id,
+            'website' => 'asdf'
+        ]);
 
         return View::make('laradic/admin::users.index')->with(['users' => $this->getUsers(), 'groups' => $this->getGroups()]);
     }
