@@ -2,7 +2,8 @@
 
 use Illuminate\Contracts\Foundation\Application;
 use Laradic\Extensions\Extension;
-use Laradic\Extensions\ExtensionCollection;
+use Laradic\Extensions\ExtensionFactory;
+use Symfony\Component\VarDumper\VarDumper;
 
 return array(
     'name' => 'Admin',
@@ -10,20 +11,29 @@ return array(
     'dependencies' => [
         'laradic/packadic'
     ],
-    'register' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
+    'paths' => [
+        'migrations' => [base_path('vendor/rydurham/sentinel/src/migrations')],
+        #'seeds' => [base_path('vendor/rydurham/sentinel/src/seeds')]
+    ],
+    'seeds' => [
+        #base_path('vendor/rydurham/sentinel/src/seeds/DatabaseSeeder.php') => 'SentinelDatabaseSeeder'
+    ],
+    'register' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
         $app->register('Laradic\Admin\AdminServiceProvider');
-
     },
-    'boot' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
+    'boot' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
     },
-    'install' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
+    'pre_install' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
-
+       # $exists = $app->make('migrator')->getRepository()->repositoryExists();
+        Debugger::dump('pre_install');
+        $app->register('Laradic\Admin\AdminServiceProvider');
     },
-    'uninstall' => function(Application $app, Extension $extension, ExtensionCollection $extensions)
+    'pre_uninstall' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
-
+        Debugger::dump('pre_uninstall');
+        $app->register('Laradic\Admin\AdminServiceProvider');
     }
 );
