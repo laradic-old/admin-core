@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Contracts\Foundation\Application;
-use Laradic\Admin\Attributes\Attribute;
 use Laradic\Extensions\Extension;
 use Laradic\Extensions\ExtensionFactory;
 use Symfony\Component\VarDumper\VarDumper;
@@ -26,19 +25,4 @@ return array(
     'boot' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
     },
-    'pre_install' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
-    {
-        # $exists = $app->make('migrator')->getRepository()->repositoryExists();
-        Debugger::dump('pre_install');
-        $app->register('Laradic\Admin\AdminServiceProvider');
-    },
-    'installed' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
-    {
-        Attribute::create(['slug' => 'website', 'label' => 'Website', 'description' => 'The website of the user']);
-    },
-    'pre_uninstall' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
-    {
-        Debugger::dump('pre_uninstall');
-        $app->register('Laradic\Admin\AdminServiceProvider');
-    }
 );

@@ -24,12 +24,18 @@ class AdminRedirector extends Redirector
     protected $generator;
 
     /**
- * Instanciates the class
- */
-    public function toAdmin($path, $status = 302, $headers = array(), $secure = null)
+     * Instanciates the class
+     *
+     * @param null  $path
+     * @param int   $status
+     * @param array $headers
+     * @param null  $secure
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function toAdmin($path = null, $status = 302, $headers = array(), $secure = null)
     {
         $path = $this->generator->toAdmin($path, array(), $secure);
-        
+
         return $this->createRedirect($path, $status, $headers);
     }
 }

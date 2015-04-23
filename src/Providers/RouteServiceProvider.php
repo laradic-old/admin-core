@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	public function map(Router $router)
 	{
-		$router->group(['namespace' => $this->namespace], function($router)
+		$router->group(['prefix' => config('laradic/admin::base_route'), 'namespace' => $this->namespace], function($router)
 		{
 			require_once __DIR__ . '/../Http/routes.php';
 		});

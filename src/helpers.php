@@ -1,6 +1,6 @@
 <?php
 if(!function_exists('admin_url')){
-    function admin_url($path, $extra = array(), $secure = false)
+    function admin_url($path = null, $extra = array(), $secure = false)
     {
         return app('url')->toAdmin($path, $extra, $secure);
     }

@@ -23,7 +23,8 @@
         "cartalyst/alerts": "~2.0",
         "cartalyst/tags": "~1.0",
         "rydurham/sentinel": "~2.1",
-        "davejamesmiller/laravel-breadcrumbs": "~3.0"
+        "davejamesmiller/laravel-breadcrumbs": "~3.0",
+        "chumper/datatable": "dev-develop#bdd90cbe65b3544761f69ea199a1b9591770f3fc"
     },
     "require-dev": {
         "laradic/dev": "dev-master"

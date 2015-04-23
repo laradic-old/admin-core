@@ -24,10 +24,9 @@ class AdminUrlGenerator extends UrlGenerator
     /**
      * Create a new admin URL Generator instance.
      *
-     * @param  \Illuminate\Routing\RouteCollection  $routes
-     * @param  \Illuminate\Http\Request  $request
-     * @param string $adminRoutePrefix
-     * @return void
+     * @param  \Illuminate\Routing\RouteCollection $routes
+     * @param  \Illuminate\Http\Request            $request
+     * @param string                               $adminRoutePrefix
      */
     public function __construct(RouteCollection $routes, Request $request, $adminRoutePrefix)
     {
@@ -37,11 +36,17 @@ class AdminUrlGenerator extends UrlGenerator
 
         $this->adminRoutePrefix = $adminRoutePrefix;
     }
+
     /**
- * Instanciates the class
- */
-    public function toAdmin($path = '', $extra = array(), $secure = null)
+     * Instanciates the class
+     *
+     * @param string $path
+     * @param array  $extra
+     * @param null   $secure
+     * @return string
+     */
+    public function toAdmin($path = null, $extra = array(), $secure = null)
     {
-        return $this->to($this->adminRoutePrefix . '/' . $path, $extra, $secure);
+        return $this->to($this->adminRoutePrefix . isset($path) ? '/' . $path : '', $extra, $secure);
     }
 }
