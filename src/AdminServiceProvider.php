@@ -32,13 +32,10 @@ class AdminServiceProvider extends ServiceProvider
 
     protected $providers = [
         'Laradic\Admin\Providers\RouteServiceProvider',
-        'Laradic\Themes\ThemeServiceProvider',
-        'Cartalyst\Alerts\Laravel\AlertsServiceProvider',
         'Chumper\Datatable\DatatableServiceProvider'
     ];
 
     protected $aliases = [
-        'Alert'     => 'Cartalyst\Alerts\Laravel\Facades\Alert',
         'Datatable' => 'Chumper\Datatable\Facades\DatatableFacade'
     ];
 
@@ -68,13 +65,8 @@ class AdminServiceProvider extends ServiceProvider
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::register();
 
-        $config = $app->make('config');
-        $config->set('cartalyst.alerts.classes', [ 'error' => 'danger' ]);
-
-
         $this->registerRouting();
         $this->registerSentinel();
-
 
         # Add sentry to the navigation factory so we can make use of hasAccess and all stuff that uses that
         $app->make('navigation')->setSentry($app->make('sentry'));
