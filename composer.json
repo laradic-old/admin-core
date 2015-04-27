@@ -1,5 +1,5 @@
 {
-    "name": "laradic/admin",
+    "name": "laradic-admin/core",
     "type": "laradic-extension",
     "description": "Admin",
     "homepage": "https://github.com/laradic/admin",
