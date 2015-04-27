@@ -7,7 +7,7 @@ use Symfony\Component\VarDumper\VarDumper;
 
 return array(
     'name' => 'Admin',
-    'slug' => 'laradic/admin',
+    'slug' => 'laradic-admin/core',
     'dependencies' => [
         'laradic/packadic'
     ],

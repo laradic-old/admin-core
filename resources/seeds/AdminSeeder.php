@@ -20,7 +20,15 @@ class AdminSeeder extends Seeder
 {
     public function run()
     {
-        app('files')->requireOnce(base_path('vendor/rydurham/sentinel/src/seeds/DatabaseSeeder.php'));
+        $f = app('files');
+        $file = 'vendor/rydurham/sentinel/src/seeds/DatabaseSeeder.php';
+        $require = base_path($file);
+        if($f->exists(__DIR__ . '/../../' . $file))
+        {
+            $require = __DIR__ . '/../../' . $file;
+        }
+        app('files')->requireOnce($require);
+
         $this->call('SentinelDatabaseSeeder');
         VarDumper::dump('AdminSeeder->run()');
     }

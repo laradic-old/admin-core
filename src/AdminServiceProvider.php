@@ -65,6 +65,7 @@ class AdminServiceProvider extends ServiceProvider
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::register();
 
+
         $this->registerRouting();
         $this->registerSentinel();
 
