@@ -8,7 +8,7 @@
 @stop
 @section('notifications')
     @parent
-    @include('laradic/admin::partials.alerts')
+    @include('laradic-admin/core::partials.alerts')
 @stop
 @section('header-menu')
     @navigation('admin', 'theme::navigation.header-left')
@@ -29,7 +29,7 @@
             packadic.mergeConfig({
                 requireJS: {
                     paths  : {
-                        'laradic/admin': '{{ Asset::url('laradic/admin::') }}'
+                        'laradic/admin': '{{ Asset::url('laradic-admin/core::') }}'
                     }
                 }
             });

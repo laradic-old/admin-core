@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Services;
+<?php namespace LaradicAdmin\Core\Services;
 
 ##use App\User;
 use App\User;

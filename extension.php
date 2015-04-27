@@ -20,7 +20,7 @@ return array(
     ],
     'register' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {
-        $app->register('Laradic\Admin\AdminServiceProvider');
+        $app->register('LaradicAdmin\Core\AdminServiceProvider');
     },
     'boot' => function(Application $app, Extension $extension, ExtensionFactory $extensions)
     {

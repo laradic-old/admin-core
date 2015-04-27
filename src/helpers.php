@@ -16,7 +16,7 @@ if ( ! function_exists('redirect'))
      * @param  int     $status
      * @param  array   $headers
      * @param  bool    $secure
-     * @return \Laradic\Admin\Routing\AdminRedirector|\Illuminate\Http\RedirectResponse
+     * @return \LaradicAdmin\Core\Routing\AdminRedirector|\Illuminate\Http\RedirectResponse
      */
     function redirect($to = null, $status = 302, $headers = array(), $secure = null)
     {
@@ -37,7 +37,7 @@ if ( ! function_exists('admin_redirect'))
      * @param  int     $status
      * @param  array   $headers
      * @param  bool    $secure
-     * @return \Laradic\Admin\Routing\AdminRedirector|\Illuminate\Http\RedirectResponse
+     * @return \LaradicAdmin\Core\Routing\AdminRedirector|\Illuminate\Http\RedirectResponse
      */
     function admin_redirect($to = null, $status = 302, $headers = array(), $secure = null)
     {

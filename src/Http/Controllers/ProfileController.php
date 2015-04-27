@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use View;
 use Sentinel\Controllers\ProfileController as BaseController;
@@ -26,7 +26,7 @@ class ProfileController extends BaseController
         // Get the user
         $user = $this->userRepository->retrieveById(Session::get('userId'));
 
-        return View::make('laradic/admin::users.show')->with(['user' => $user]);
+        return View::make('laradic-admin/core::users.show')->with(['user' => $user]);
     }
 
 
@@ -43,7 +43,7 @@ class ProfileController extends BaseController
         // Get all available groups
         $groups = $this->groupRepository->all();
 
-        return View::make('laradic/admin::users.edit')->with([
+        return View::make('laradic-admin/core::users.edit')->with([
             'user' => $user,
             'groups' => $groups
         ]);

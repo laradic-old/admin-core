@@ -1,4 +1,4 @@
-@extends('laradic/admin::layouts.default')
+@extends('laradic-admin/core::layouts.default')
 
 @section('page-title')
 Create New User

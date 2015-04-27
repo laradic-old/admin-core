@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use Vinkla\Hashids\HashidsManager;
 use Sentinel\Controllers\RegistrationController as BaseController;
@@ -34,7 +34,7 @@ class RegistrationController extends BaseController
         }
 
         // All clear - show the registration form.
-        return View::make('laradic/admin::users.register');
+        return View::make('laradic-admin/core::users.register');
     }
 
 
@@ -45,7 +45,7 @@ class RegistrationController extends BaseController
      */
     function resendActivationForm()
     {
-        return View::make('laradic/admin::users.resend');
+        return View::make('laradic-admin/core::users.resend');
     }
 
     /**
@@ -68,7 +68,7 @@ class RegistrationController extends BaseController
      */
     public function forgotPasswordForm()
     {
-        return View::make('laradic/admin::users.forgot');
+        return View::make('laradic-admin/core::users.forgot');
     }
 
 
@@ -94,7 +94,7 @@ class RegistrationController extends BaseController
             return $this->redirectViaResponse('registration_reset_invalid', $result);
         }
 
-        return View::make('laradic/admin::users.reset')->with([
+        return View::make('laradic-admin/core::users.reset')->with([
             'hash' => $hash,
             'code' => $code
         ]);

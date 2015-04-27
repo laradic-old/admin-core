@@ -2,7 +2,7 @@
  /**
  * Part of the Radic packages.
  */
-namespace Laradic\Admin\Auth;
+namespace LaradicAdmin\Core\Auth;
 
 use Cartalyst\Sentry\Throttling\UserBannedException;
 use Cartalyst\Sentry\Throttling\UserSuspendedException;
@@ -12,7 +12,7 @@ use Cartalyst\Sentry\Users\UserNotActivatedException;
 use Cartalyst\Sentry\Users\UserNotFoundException;
 use Cartalyst\Sentry\Users\WrongPasswordException;
 use Illuminate\Support\MessageBag;
-use Laradic\Admin\Http\Requests\AuthRequest;
+use LaradicAdmin\Core\Http\Requests\AuthRequest;
 
 /**
  * Class AuthenticatesAdmins

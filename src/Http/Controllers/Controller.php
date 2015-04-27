@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesCommands;
 use Illuminate\Routing\Controller as BaseController;

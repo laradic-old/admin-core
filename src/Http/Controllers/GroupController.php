@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use Illuminate\Pagination\Paginator;
 use Input;
@@ -22,7 +22,7 @@ class GroupController extends BaseController
         $pagedData   = array_slice($groups, $currentPage * $perPage, $perPage);
         $groups      = new Paginator($pagedData, $perPage, $currentPage);
 
-        return View::make('laradic/admin::groups.index')->with(['groups' => $groups]);
+        return View::make('laradic-admin/core::groups.index')->with(['groups' => $groups]);
     }
 
     /**
@@ -32,7 +32,7 @@ class GroupController extends BaseController
      */
     public function create()
     {
-        return View::make('laradic/admin::groups.create');
+        return View::make('laradic-admin/core::groups.create');
     }
 
 
@@ -49,7 +49,7 @@ class GroupController extends BaseController
         // Pull the group from storage
         $group = $this->groupRepository->retrieveById($id);
 
-        return View::make('laradic/admin::groups.show')->with(['group' => $group]);
+        return View::make('laradic-admin/core::groups.show')->with(['group' => $group]);
     }
 
     /**
@@ -65,7 +65,7 @@ class GroupController extends BaseController
         // Pull the group from storage
         $group = $this->groupRepository->retrieveById($id);
 
-        return View::make('laradic/admin::groups.edit')->with([
+        return View::make('laradic-admin/core::groups.edit')->with([
             'group'       => $group,
             'permissions' => $group->getPermissions()
         ]);

@@ -8,7 +8,7 @@
  * @link        http://radic.mit-license.org
  */
 use Illuminate\Database\Seeder;
-use Laradic\Support\Str;
+use Laradic\Support\String;
 use Symfony\Component\VarDumper\VarDumper;
 
 /**

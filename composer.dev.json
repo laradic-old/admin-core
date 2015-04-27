@@ -18,13 +18,20 @@
     "prefer-stable": true,
     "require": {
         "php": ">=5.4.0",
+        "laradic/support": "~1.0",
+        "laradic/packadic": "dev-master",
         "cartalyst/alerts": "~2.0",
         "cartalyst/tags": "~1.0",
-        "rydurham/sentinel": "~2.1"
+        "rydurham/sentinel": "~2.1",
+        "davejamesmiller/laravel-breadcrumbs": "~3.0",
+        "chumper/datatable": "dev-develop#bdd90cbe65b3544761f69ea199a1b9591770f3fc"
+    },
+    "require-dev": {
+        "laradic/dev": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "LaradicAdmin\\Core\\": "src"
+            "Laradic\\Admin\\": "src"
         }
     }
 }

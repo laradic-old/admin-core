@@ -2,14 +2,14 @@
  /**
  * Part of the Radic packages.
  */
-namespace Laradic\Admin\Routing;
+namespace LaradicAdmin\Core\Routing;
 
 use Illuminate\Routing\Redirector;
 
 /**
  * Class AdminRedirector
  *
- * @package     Laradic\Admin\Routing
+ * @package     LaradicAdmin\Core\Routing
  * @author      Robin Radic
  * @license     MIT
  * @copyright   2011-2015, Robin Radic
@@ -19,7 +19,7 @@ class AdminRedirector extends Redirector
 {
 
     /**
-     * @var \Laradic\Admin\Routing\AdminUrlGenerator
+     * @var \LaradicAdmin\Core\Routing\AdminUrlGenerator
      */
     protected $generator;
 

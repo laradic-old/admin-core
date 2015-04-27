@@ -2,11 +2,11 @@
 /**
  * Part of the Radic packages.
  */
-namespace Laradic\Admin;
+namespace LaradicAdmin\Core;
 
 use Illuminate\Foundation\Application;
-use Laradic\Admin\Routing\AdminRedirector;
-use Laradic\Admin\Routing\AdminUrlGenerator;
+use LaradicAdmin\Core\Routing\AdminRedirector;
+use LaradicAdmin\Core\Routing\AdminUrlGenerator;
 use Laradic\Support\ServiceProvider;
 
 #@use ACL;
@@ -31,7 +31,7 @@ class AdminServiceProvider extends ServiceProvider
     protected $dir = __DIR__;
 
     protected $providers = [
-        'Laradic\Admin\Providers\RouteServiceProvider',
+        'LaradicAdmin\Core\Providers\RouteServiceProvider',
         'Chumper\Datatable\DatatableServiceProvider'
     ];
 
@@ -55,7 +55,7 @@ class AdminServiceProvider extends ServiceProvider
         /** @var \Illuminate\Foundation\Application $app */
         $app = parent::boot();
 
-        $app->make('breadcrumbs')->setView('laradic/admin::partials.breadcrumbs');
+        $app->make('breadcrumbs')->setView('laradic-admin/core::partials.breadcrumbs');
         require_once __DIR__ . '/Http/navigation.php';
     }
 
@@ -111,7 +111,7 @@ class AdminServiceProvider extends ServiceProvider
                 return new AdminUrlGenerator(
                     $routes,
                     $app->rebinding('request', $this->requestRebinder()),
-                    config('laradic/admin::base_route')
+                    config('laradic-admin/core::base_route')
                 );
             }
         );

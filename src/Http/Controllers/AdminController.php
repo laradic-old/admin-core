@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use Illuminate\Contracts\Foundation\Application;
 
@@ -13,6 +13,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('laradic/admin::index');
+        return view('laradic-admin/core::index');
     }
 }

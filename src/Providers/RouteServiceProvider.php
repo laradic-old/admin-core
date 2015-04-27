@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Providers;
+<?php namespace LaradicAdmin\Core\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -12,7 +12,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 *
 	 * @var string
 	 */
-	protected $namespace = 'Laradic\Admin\Http\Controllers';
+	protected $namespace = 'LaradicAdmin\Core\Http\Controllers';
 
 	/**
 	 * Define your route model bindings, pattern filters, etc.
@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider {
 	 */
 	public function map(Router $router)
 	{
-		$router->group(['prefix' => config('laradic/admin::base_route'), 'namespace' => $this->namespace], function($router)
+		$router->group(['prefix' => config('laradic-admin/core::base_route'), 'namespace' => $this->namespace], function($router)
 		{
 			require_once __DIR__ . '/../Http/routes.php';
 		});

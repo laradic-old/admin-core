@@ -2,7 +2,7 @@
  /**
  * Part of the Radic packages.
  */
-namespace Laradic\Admin\Routing;
+namespace LaradicAdmin\Core\Routing;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\RouteCollection;
@@ -11,7 +11,7 @@ use Illuminate\Routing\UrlGenerator;
 /**
  * Class AdminUrlGenerator
  *
- * @package     Laradic\Admin
+ * @package     LaradicAdmin\Core
  * @author      Robin Radic
  * @license     MIT
  * @copyright   2011-2015, Robin Radic

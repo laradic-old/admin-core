@@ -1,9 +1,9 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use Event;
 use Illuminate\Pagination\Paginator;
 use Input;
-use Laradic\Admin\Attributes\Attribute;
+use LaradicAdmin\Core\Attributes\Attribute;
 use Redirect;
 use Sentinel\Controllers\UserController as BaseController;
 use Sentry;
@@ -52,7 +52,7 @@ class UserController extends BaseController
             'website' => 'asdf'
         ]);
 
-        return View::make('laradic/admin::users.index')->with(['users' => $this->getUsers(), 'groups' => $this->getGroups()]);
+        return View::make('laradic-admin/core::users.index')->with(['users' => $this->getUsers(), 'groups' => $this->getGroups()]);
     }
 
 
@@ -63,7 +63,7 @@ class UserController extends BaseController
      */
     public function create()
     {
-        return View::make('laradic/admin::users.create');
+        return View::make('laradic-admin/core::users.create');
     }
 
 
@@ -82,7 +82,7 @@ class UserController extends BaseController
         // Get the user
         $user = $this->userRepository->retrieveById($id);
 
-        return View::make('laradic/admin::users.show')->with(['user' => $user]);
+        return View::make('laradic-admin/core::users.show')->with(['user' => $user]);
     }
 
     /**
@@ -103,7 +103,7 @@ class UserController extends BaseController
         // Get all available groups
         $groups = $this->groupRepository->all();
 
-        return View::make('laradic/admin::users.edit')->with([
+        return View::make('laradic-admin/core::users.edit')->with([
             'user'   => $user,
             'groups' => $groups
         ]);

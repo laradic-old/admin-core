@@ -1,4 +1,4 @@
-<?php namespace Laradic\Admin\Http\Controllers;
+<?php namespace LaradicAdmin\Core\Http\Controllers;
 
 use Sentinel\Controllers\SessionController as BaseController;
 use Sentry;
@@ -20,6 +20,6 @@ class SessionController extends BaseController
         }
 
         // No - they are not signed in.  Show the login form.
-        return View::make('laradic/admin::sessions.login');
+        return View::make('laradic-admin/core::sessions.login');
     }
 }

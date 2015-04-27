@@ -1,4 +1,4 @@
-@extends('laradic/admin::layouts.default')
+@extends('laradic-admin/core::layouts.default')
 
 {{-- Web site Title --}}
 @section('title')
